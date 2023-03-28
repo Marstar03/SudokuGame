@@ -4,10 +4,8 @@ import java.util.Random;
 
 public class Cell {
     private int value = 0;
-    private SmallGrid smallGrid;
 
     public Cell(SmallGrid smallGrid) {
-        this.smallGrid = smallGrid;
     }
 
     public int getValue() {
