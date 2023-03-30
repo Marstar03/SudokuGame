@@ -43,10 +43,22 @@ public class SudokuGame implements SudokuGameInterface {
         }  
       }
 
-
+    public boolean gridValidator(int[][] grid) {
+        for (int row = 0; row < ROW_SIZE; row++) {
+            for (int column = 0; column < COLUMN_SIZE; column++) {
+                int value = grid[row][column];
+                if (value == 0) {
+                    return false;
+                }
+                if (! CellValidator.isValidCell(grid, value, row, column)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
-        SudokuGame game = new SudokuGame();
-        game.generator.printBoard(game.solutionGrid);
+        
     }
 }

@@ -14,15 +14,15 @@
       <TextField fx:id="usernameField" layoutX="391.0" layoutY="69.0" prefHeight="26.0" prefWidth="126.0" />
       <Label layoutX="423.0" layoutY="48.0" prefHeight="18.0" prefWidth="78.0" text="Username:" />
       <Button fx:id="setButton" layoutX="525.0" layoutY="69.0" mnemonicParsing="false" text="Set" />
-      <Button fx:id="generateGridButton" layoutX="410.0" layoutY="174.0" mnemonicParsing="false" onAction="#generateGrid" text="Generate grid" />
+      <Button fx:id="startNewGameButton" layoutX="390.0" layoutY="118.0" mnemonicParsing="false" onAction="#generateGrid" prefHeight="26.0" prefWidth="100.0" text="Start new game" />
       <Label layoutX="130.0" layoutY="26.0" prefHeight="30.0" prefWidth="126.0" text="SUDOKU">
          <font>
             <Font name="Felix Titling" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="submitButton" disable="true" layoutX="427.0" layoutY="224.0" mnemonicParsing="false" onAction="#retrieveGrid" text="Submit" />
+      <Button fx:id="submitButton" disable="true" layoutX="504.0" layoutY="119.0" mnemonicParsing="false" onAction="#submitGrid" text="Submit" />
       <Label layoutX="391.0" layoutY="325.0" prefHeight="18.0" prefWidth="89.0" text="Remaining lives:" />
-      <TextField fx:id="lives" alignment="CENTER" editable="false" layoutX="483.0" layoutY="317.0" prefHeight="33.0" prefWidth="35.0" text="3">
+      <TextField fx:id="livesField" alignment="CENTER" editable="false" layoutX="483.0" layoutY="317.0" prefHeight="33.0" prefWidth="35.0" text="3">
          <font>
             <Font name="Felix Titling" size="16.0" />
          </font>
@@ -458,5 +458,9 @@
             </TextField>
          </children>
       </GridPane>
+      <TextField fx:id="statusField" editable="false" layoutX="390.0" layoutY="272.0" prefHeight="26.0" prefWidth="126.0" />
+      <Button fx:id="saveGameButton" disable="true" layoutX="390.0" layoutY="161.0" mnemonicParsing="false" onAction="#saveGame" prefHeight="26.0" prefWidth="126.0" text="Save current game" />
+      <Button fx:id="restoreGameButton" layoutX="390.0" layoutY="200.0" mnemonicParsing="false" onAction="#restoreGame" prefHeight="26.0" prefWidth="126.0" text="Restore saved game" />
+      <Label layoutX="439.0" layoutY="246.0" text="Status:" />
    </children>
 </AnchorPane>
