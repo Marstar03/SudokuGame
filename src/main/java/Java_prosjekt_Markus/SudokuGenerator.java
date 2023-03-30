@@ -15,7 +15,7 @@ public class SudokuGenerator {
       };
 
     //fjern denne metoden etter du er ferdig. Er kopiert fra John
-    public void printBoard(int[][] board) {
+    public static void printBoard(int[][] board) {
         for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
           if (row % 3 == 0 && row != 0) {
             System.out.println("-----------");

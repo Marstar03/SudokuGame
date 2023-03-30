@@ -59,7 +59,7 @@ public class SudokuController {
                 field.setText(gridNumber);
             }
         }
-        game.generator.printBoard(game.solutionGrid);
+        SudokuGenerator.printBoard(game.solutionGrid);
     }
 
     private void retrieveGrid() {
