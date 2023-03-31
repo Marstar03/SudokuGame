@@ -90,17 +90,30 @@ public class SudokuController {
 
     //Dette er en hjelpermetode som brukes av både submitGrid og saveGrid. Det denne metoden gjør, er å iterere gjennom alle
     //tekstfeltene i UI-grid-en, oversette verdien fra streng til int, for så å sette denne verdien på rett plass i gameGrid-array-et.
+    //Må opprette en ny 2D-array, og sette det lik gameGrid til slutt for å sikre at gameGrid enten får inn alle verdiene eller ingen.
     private void retrieveGrid() {
+        int[][] retrievedGrid = new int[9][9];
         //Må iterere gjennom allTextFields, hente verdien til tekstfeltet, og sette denne verdien inn i gameGrid.
         for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
             for (int column = 0; column < SudokuGame.COLUMN_SIZE; column++) {
                 String UIGridValue = this.textFieldArray[row][column].getText();
                 //Dersom brukeren ikke skriver inn noe tall, vil isNumeric være false, og gameGrid vil beholde 0 som verdi.
+                if (! SudokuGame.isNumeric(UIGridValue) && ! UIGridValue.equals("")) {
+                    //throw new IllegalArgumentException("All cells must have a numeric value");
+                    this.statusField.setText("All cells must have a numeric value");
+                    return;
+                }
+                if (UIGridValue.length() > 1) {
+                    //throw new IllegalArgumentException("Only single digit values are accepted");
+                    this.statusField.setText("Only single digit values are accepted");
+                    return;
+                }
                 if (SudokuGame.isNumeric(UIGridValue)) {
-                    this.gameGrid[row][column] = Integer.parseInt(UIGridValue);
+                retrievedGrid[row][column] = Integer.parseInt(UIGridValue);
                 }
             }
         }
+        this.gameGrid = retrievedGrid;
     }
 
     //Det denne metoden gjør, er å først kalle retrieveGrid, slik at den har den nyeste versjonen av UI-grid-en.
@@ -110,21 +123,21 @@ public class SudokuController {
     public void submitGrid() {
         int livesLeft = Integer.parseInt(this.livesField.getText());
         this.retrieveGrid();
-        boolean validGrid = this.game.gridValidator(gameGrid);
+        boolean validGrid = SudokuGame.gridValidator(gameGrid);
         if (! validGrid) {
             if (livesLeft > 1) {
                 livesLeft--;
                 this.livesField.setText(String.valueOf(livesLeft));
             }
             else {
-                this.statusField.setText("GAME OVER");
+                this.statusField.setText("GAME OVER :(");
                 this.livesField.setText("0");
                 this.submitButton.setDisable(true);
                 this.saveGameButton.setDisable(true);
             }
         }
         else {
-            this.statusField.setText("SUCCESS!");
+            this.statusField.setText("SUCCESS :)");
         }
     }
 

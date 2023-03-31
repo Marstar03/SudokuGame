@@ -19,7 +19,7 @@ public class SudokuGame implements SudokuGameInterface {
         this.gameGrid = cellRemover(this.generator.getGrid());
     }
 
-    public int[][] cellRemover(int[][] fullGrid) {
+    private int[][] cellRemover(int[][] fullGrid) {
         Random rand = new Random();
         for (int i = 0; i < 40; i++) {
             int randomRow = rand.nextInt(9);
@@ -28,10 +28,9 @@ public class SudokuGame implements SudokuGameInterface {
         }
         return fullGrid;
     }
-//Returner kopi istedenfor det faktiske objektet
+//Denne metoden returnerer en kopi av gameGrid for å opprettholde riktig innkapsling.
     public int[][] getGameGrid() {
         int[][] gameGridCopy = new int[9][9];
-        //sett grid til å være en kopi av gameGrid
         for (int row = 0; row < ROW_SIZE; row++) {
             for (int column = 0; column < COLUMN_SIZE; column++) {
                 gameGridCopy[row][column] = this.gameGrid[row][column];
@@ -40,6 +39,7 @@ public class SudokuGame implements SudokuGameInterface {
         return gameGridCopy;
     }
 
+    //Denne metoden er en hjelpemetode som 
     public static boolean isNumeric(String str) { 
         try {  
           Double.parseDouble(str);  
@@ -50,7 +50,7 @@ public class SudokuGame implements SudokuGameInterface {
         }  
       }
 
-    public boolean gridValidator(int[][] grid) {
+    public static boolean gridValidator(int[][] grid) {
         for (int row = 0; row < ROW_SIZE; row++) {
             for (int column = 0; column < COLUMN_SIZE; column++) {
                 int value = grid[row][column];
