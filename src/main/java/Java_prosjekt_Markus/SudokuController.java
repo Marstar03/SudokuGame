@@ -1,5 +1,8 @@
 package Java_prosjekt_Markus;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -11,46 +14,69 @@ import javafx.scene.control.Button;
 public class SudokuController {
     private SudokuGame game;
     private int[][] gameGrid;
-    private TextField[][] allTextFields = new TextField[9][9];
+    private TextField[][] textFieldArray = new TextField[9][9];
     
-    @FXML private TextField usernameField, livesField, statusField;
+    @FXML private TextField livesField, statusField;
     @FXML private Button setButton, startNewGameButton, submitButton, saveGameButton, restoreGameButton;
     @FXML private GridPane largeGrid;
 
     //Putt så mye av logikken til metodene inn i en annen klasse.
     //Husk på innkapsling og validering!!!
 
-    @FXML
-    public void makeTextFieldArray() {
-        int row1 = 0;
-        int column1 = 0;
-        for (Node childNode1 : largeGrid.getChildren()) {
-            if (childNode1 instanceof TextField) {
-                TextField textField1 = (TextField) childNode1;
-                this.allTextFields[row1][column1] = textField1;
-                column1 = (column1 + 1) % 9;
-                if (column1 == 0) {
-                    row1++;
+    //Dette er en hjelpermetode som lager en ny 2D-array med tekstfeltene i FXML-filen, som vil senere bli brukt av generateGrid
+    private void makeTextFieldArray() {
+        int row = 0;
+        int column = 0;
+        for (Node childNode : largeGrid.getChildren()) {
+            if (childNode instanceof TextField) {
+                TextField textField = (TextField) childNode;
+                this.textFieldArray[row][column] = textField;
+                column = (column + 1) % 9;
+                if (column == 0) {
+                    row++;
                 }
             }
         }
     }
 
+    //Denne metoden oppretter en ny instans av et SudokuGame, og får klassen til å opprette en ny grid. 
+    //Til slutt kalles generateGrid, som "oversetter" tallene i 2D int-array-et til tekst i de riktige tekstfeltene i UI-grid-en.
     @FXML
-    public void generateGrid() {
-        this.makeTextFieldArray();
+    public void generateNewGrid() {
         this.game = new SudokuGame();
         this.gameGrid = game.getGameGrid();
+        this.generateUIGrid(gameGrid);
+    }
+
+    //Denne metoden gjør det samme som generateNewGrid, bortsett fra at, istedenfor å hente et nytt 2D-array fra SudokuGame,
+    //kaller den SudokuFileManager sin readGridFromFile, som leser inn en lagret grid fra fil, og putter disse verdiene i en 2D int-array.
+    @FXML
+    public void generateSavedGrid() {
+        try {
+            this.gameGrid = SudokuFileManager.readGridFromFile();
+            this.generateUIGrid(gameGrid);
+        } catch (FileNotFoundException e) {
+            this.statusField.setText("Unable to restore game");
+        }
+    }
+
+    //Dette er en hjelpermetode som blir brukt av begge metodene over. Det denne metoden gjør, er å iterere gjennom 2D int-array-et gameGrid.
+    //For hver int-verdi i array-et, settes teksten til det tilsvarende tekstfeltet i UI-grid-en til en streng-representasjon av verdien.
+    //Dersom verdien er 0, er dette et felt der verdien har blitt fjernet og skal puttes inn av brukeren.
+    //Derfor settes teksten til dette feltet til å være en tom streng.
+    private void generateUIGrid(int[][] grid) {
+        this.makeTextFieldArray();
         this.submitButton.setDisable(false);
         this.saveGameButton.setDisable(false);
         this.livesField.setText("3");
         this.statusField.setText("");
-        for (int row2 = 0; row2 < SudokuGame.ROW_SIZE; row2++) {
-            for (int column2 = 0; column2 < SudokuGame.COLUMN_SIZE; column2++) {
-                TextField field = allTextFields[row2][column2];
+
+        for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
+            for (int column = 0; column < SudokuGame.COLUMN_SIZE; column++) {
+                TextField field = textFieldArray[row][column];
                 String gridNumber = "";
-                if (gameGrid[row2][column2] != 0) {
-                    gridNumber = String.valueOf(gameGrid[row2][column2]);
+                if (grid[row][column] != 0) {
+                    gridNumber = String.valueOf(grid[row][column]);
                     field.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
                 }
                 else {
@@ -59,23 +85,27 @@ public class SudokuController {
                 field.setText(gridNumber);
             }
         }
-        SudokuGenerator.printBoard(game.solutionGrid);
+        SudokuGenerator.printBoard(grid);
     }
 
+    //Dette er en hjelpermetode som brukes av både submitGrid og saveGrid. Det denne metoden gjør, er å iterere gjennom alle
+    //tekstfeltene i UI-grid-en, oversette verdien fra streng til int, for så å sette denne verdien på rett plass i gameGrid-array-et.
     private void retrieveGrid() {
         //Må iterere gjennom allTextFields, hente verdien til tekstfeltet, og sette denne verdien inn i gameGrid.
         for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
             for (int column = 0; column < SudokuGame.COLUMN_SIZE; column++) {
-                String UIGridValue = this.allTextFields[row][column].getText();
+                String UIGridValue = this.textFieldArray[row][column].getText();
                 //Dersom brukeren ikke skriver inn noe tall, vil isNumeric være false, og gameGrid vil beholde 0 som verdi.
                 if (SudokuGame.isNumeric(UIGridValue)) {
                     this.gameGrid[row][column] = Integer.parseInt(UIGridValue);
                 }
             }
         }
-        this.game.gridValidator(gameGrid);
     }
 
+    //Det denne metoden gjør, er å først kalle retrieveGrid, slik at den har den nyeste versjonen av UI-grid-en.
+    //Så bruker den en ekstern valideringsmetode, som returnerer en boolsk verdi, som sier om grid-en er gyldig.
+    //Hvis grid-en ikke er gyldig, mister brukeren et liv, og dersom alle 3 forsøk har blitt brukt opp, er spillet over.
     @FXML
     public void submitGrid() {
         int livesLeft = Integer.parseInt(this.livesField.getText());
@@ -98,18 +128,15 @@ public class SudokuController {
         }
     }
 
+    //Denne metoden kaller først retrieveGrid, for å få oppdatert versjon av grid-en.
+    //Deretter kaller den SudokuFileManager sin writeGridToFile-metode som tar seg av jobben om å lagre grid-en til fil.
     @FXML
     public void saveGame() {
         this.retrieveGrid();
-        SudokuFileManager.writeGridToFile(gameGrid);
-    }
-
-    @FXML 
-    public void restoreGame() {
-
-    }
-
-    public static void main(String[] args) {
-        System.out.println(SudokuGame.isNumeric("0"));
+        try {
+            SudokuFileManager.writeGridToFile(gameGrid);
+        } catch (IOException e) {
+            this.statusField.setText("Saving unsuccessful");
+        }
     }
 }

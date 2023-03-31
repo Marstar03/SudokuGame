@@ -30,7 +30,7 @@ public class SudokuGenerator {
         }
       }
 
-    public boolean generate() {
+    private boolean generate() {
         List<Integer> numberList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Collections.shuffle(numberList);
         for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
@@ -62,10 +62,10 @@ public class SudokuGenerator {
 
     public static void main(String[] args) {
         SudokuGenerator generator = new SudokuGenerator();
-        generator.printBoard(generator.grid);
+        SudokuGenerator.printBoard(generator.grid);
         generator.generate();
         System.out.println("Ny");
-        generator.printBoard(generator.grid);
+        SudokuGenerator.printBoard(generator.grid);
     }
 }
  

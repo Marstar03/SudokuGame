@@ -3,20 +3,20 @@ package Java_prosjekt_Markus;
 import java.util.Random;
 
 public class SudokuGame implements SudokuGameInterface {
-    public final static int ROW_SIZE = 9;
-    public final static int COLUMN_SIZE = 9;
+    //Deklarerer 2 konstante variabler for dimensjonene til en sudoku grid for å gjøre operasjoner mer oversiktlige.
+    final static int ROW_SIZE = 9;
+    final static int COLUMN_SIZE = 9;
+
     //Her putter du grid-en som er generert og oppdaterer den når brukeren skriver inn et tall.
     //Her fjerner du også x antall tall fra grid-en før spillet begynner (basert på vanskelighetsgrad hvis du får tid)
     //Når brukeren trykker submit, itererer klassen gjennom grid-en og validerer hver enkelt verdi opp mot resten av verdiene.
     //Hvis alle verdiene får true, er spillet ferdig. Ellers mister brukeren et liv, og må prøve på nytt.
 
-    public SudokuGenerator generator = new SudokuGenerator();
-    int[][] solutionGrid;
-    int[][] gameGrid;
+    private SudokuGenerator generator = new SudokuGenerator();
+    private int[][] gameGrid;
 
     public SudokuGame() {
-        this.solutionGrid = this.generator.getGrid();
-        this.gameGrid = cellRemover(this.solutionGrid);
+        this.gameGrid = cellRemover(this.generator.getGrid());
     }
 
     public int[][] cellRemover(int[][] fullGrid) {
@@ -30,7 +30,14 @@ public class SudokuGame implements SudokuGameInterface {
     }
 //Returner kopi istedenfor det faktiske objektet
     public int[][] getGameGrid() {
-        return this.gameGrid;
+        int[][] gameGridCopy = new int[9][9];
+        //sett grid til å være en kopi av gameGrid
+        for (int row = 0; row < ROW_SIZE; row++) {
+            for (int column = 0; column < COLUMN_SIZE; column++) {
+                gameGridCopy[row][column] = this.gameGrid[row][column];
+            }
+        }
+        return gameGridCopy;
     }
 
     public static boolean isNumeric(String str) { 
@@ -56,9 +63,5 @@ public class SudokuGame implements SudokuGameInterface {
             }
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        
     }
 }

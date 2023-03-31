@@ -2,15 +2,12 @@ package Java_prosjekt_Markus;
 import java.util.*;
 
 public class CellValidator {
-
-    //Endre på validatoren slik at den ikke teller med verdien i row, column, slik at jeg kan bruke den i SudokuGame når jeg validerer
-    //den ferdige grid-en.
     
     public static Boolean isValidCell(int[][] grid, int value, int row, int column) {
         return isValidRow(grid, value, row, column) && isValidColumn(grid, value, row, column) && isValidSmallGrid(grid, value, row, column);
     }
 
-    public static Boolean isValidRow(int[][] grid, int value, int row, int column) {
+    private static Boolean isValidRow(int[][] grid, int value, int row, int column) {
         for (int testColumn = 0; testColumn < 9; testColumn++) {
             if (grid[row][testColumn] == value && testColumn != column) {
                 return false;
@@ -19,7 +16,7 @@ public class CellValidator {
         return true;
     }
 
-    public static Boolean isValidColumn(int[][] grid, int value, int row, int column) {
+    private static Boolean isValidColumn(int[][] grid, int value, int row, int column) {
         for (int testRow = 0; testRow < 9; testRow++) {
             if (grid[testRow][column] == value && testRow != row) {
                 return false;
@@ -28,7 +25,7 @@ public class CellValidator {
         return true;
     }
     //Prøv å finne en mer kompakt måte å validere smallGrid på.
-    public static Boolean isValidSmallGrid(int[][] grid, int value, int row, int column) {
+    private static Boolean isValidSmallGrid(int[][] grid, int value, int row, int column) {
         List<Integer> smallGrid = new ArrayList<>();
         if (row < 3) {
             if (column < 3) {
