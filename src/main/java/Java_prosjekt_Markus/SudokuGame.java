@@ -8,27 +8,37 @@ public class SudokuGame implements SudokuGameInterface {
     final static int COLUMN_SIZE = 9;
 
     //Her putter du grid-en som er generert og oppdaterer den når brukeren skriver inn et tall.
-    //Her fjerner du også x antall tall fra grid-en før spillet begynner (basert på vanskelighetsgrad hvis du får tid)
     //Når brukeren trykker submit, itererer klassen gjennom grid-en og validerer hver enkelt verdi opp mot resten av verdiene.
     //Hvis alle verdiene får true, er spillet ferdig. Ellers mister brukeren et liv, og må prøve på nytt.
 
     private SudokuGenerator generator = new SudokuGenerator();
     private int[][] gameGrid;
 
+    //Hver gang et SudokuGame-objekt blir laget ved konstruktøren, henter programmet en ny grid fra generatoren,
+    //og kaller cellRemover, slik at gameGrid blir en gyldig grid, der et visst antall felt har blitt fjernet.
     public SudokuGame() {
         this.gameGrid = cellRemover(this.generator.getGrid());
     }
 
-    private int[][] cellRemover(int[][] fullGrid) {
+    //Denne metoden blir brukt i konstruktøren. Det den gjør er å trekke 2 tilfeldige indekser, 1 for rad og 1 for kolonne.
+    //Dersom verdien på denne posisjonen ikke allerede har blitt brukt, settes verdien til 0. Ellers gjentar den prosessen.
+    //Dette repeteres 40 ganger, slik at grid-en som returneres vil tilsvare en grid med 40 ukjente verdier som må fylles ut av brukeren.
+    private int[][] cellRemover(int[][] grid) {
         Random rand = new Random();
         for (int i = 0; i < 40; i++) {
             int randomRow = rand.nextInt(9);
             int randomColumn = rand.nextInt(9);
-            fullGrid[randomRow][randomColumn] = 0;
+            while (grid[randomRow][randomColumn] == 0) {
+                randomRow = rand.nextInt(9);
+                randomColumn = rand.nextInt(9);
+            }
+            grid[randomRow][randomColumn] = 0;
         }
-        return fullGrid;
+        return grid;
     }
-//Denne metoden returnerer en kopi av gameGrid for å opprettholde riktig innkapsling.
+
+    //Denne metoden returnerer en kopi av gameGrid for å opprettholde riktig innkapsling. Dette gjøres ved å iterere gjennom alle verdier,
+    //og sette riktig verdi i riktig posisjon i kopien.
     public int[][] getGameGrid() {
         int[][] gameGridCopy = new int[9][9];
         for (int row = 0; row < ROW_SIZE; row++) {
@@ -39,7 +49,9 @@ public class SudokuGame implements SudokuGameInterface {
         return gameGridCopy;
     }
 
-    //Denne metoden er en hjelpemetode som 
+    //Denne metoden er en hjelpemetode som brukes av metoden retrieveGrid i kontroller-klassen og readGridFromFile i SudokuFileManager-klassen. 
+    //Metoden tar inn en streng, og returnerer
+    //true dersom strengen kun består av tallverdier, og false ellers. Denne er nyttig under valideringen av bruker-input.
     public static boolean isNumeric(String str) { 
         try {  
           Double.parseDouble(str);  
@@ -50,7 +62,16 @@ public class SudokuGame implements SudokuGameInterface {
         }  
       }
 
+    //Denne metoden brukes for å validere en grid, altså sjekke om den er gyldig mht. sudoku-reglene.
+    //Aller først validerer den input-grid-en ved å sjekke at den har riktige dimensjoner.
+    //Deretter itererer den gjennom hver verdi i grid-en. Siden den skal sjekke om grid-en er fullstendig eller ikke,
+    //Sjekker den først om en verdi er 0. Dersom den er det, betyr det at ikke alle feltene har blitt fylt inn.
+    //Deretter sjekker den om verdien er gyldig i henhold til reglene ved å kalle isValidCell-metoden.
+    //Dersom alle cellene i grid-en overholder testene, returnerer metoden true, som betyr at grid-en er gyldig og komplett.
     public static boolean gridValidator(int[][] grid) {
+        if (grid.length != 9 || grid[0].length != 9) {
+            throw new IllegalArgumentException("The input must be a 9x9-grid");
+        }
         for (int row = 0; row < ROW_SIZE; row++) {
             for (int column = 0; column < COLUMN_SIZE; column++) {
                 int value = grid[row][column];

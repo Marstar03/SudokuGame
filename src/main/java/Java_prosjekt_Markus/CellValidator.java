@@ -2,11 +2,15 @@ package Java_prosjekt_Markus;
 import java.util.*;
 
 public class CellValidator {
-    
+
+    //Denne metoden returnerer en boolsk verdi som forteller hvorvidt en verdi vil være i en gyldig posisjon mht. sudoku-reglene.
+    //Dette gjøres ved å sjekke om verdien er i en gyldig rad, kolonne og 3x3-grid. Dersom alle disse er true, vil metoden returnere true.
     public static Boolean isValidCell(int[][] grid, int value, int row, int column) {
         return isValidRow(grid, value, row, column) && isValidColumn(grid, value, row, column) && isValidSmallGrid(grid, value, row, column);
     }
 
+    //Denne metoden sjekker om en verdi er i en gyldig rad i en 2D int-grid.
+    //Dette gjør den ved å iterere gjennom elementene i den aktuelle raden, og sjekke at verdien er unik i raden.
     private static Boolean isValidRow(int[][] grid, int value, int row, int column) {
         for (int testColumn = 0; testColumn < 9; testColumn++) {
             if (grid[row][testColumn] == value && testColumn != column) {
@@ -16,6 +20,8 @@ public class CellValidator {
         return true;
     }
 
+    //Denne metoden sjekker om en verdi er i en gyldig kolonne i en 2D int-grid.
+    //Dette gjør den ved å iterere gjennom elementene i den aktuelle kolonnen, og sjekke at verdien er unik i kolonnen.
     private static Boolean isValidColumn(int[][] grid, int value, int row, int column) {
         for (int testRow = 0; testRow < 9; testRow++) {
             if (grid[testRow][column] == value && testRow != row) {
