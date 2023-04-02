@@ -12,7 +12,7 @@ public class SudokuGenerator {
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0} 
-      };
+    };
 
     //fjern denne metoden etter du er ferdig. Er kopiert fra John
     public static void printBoard(int[][] board) {
@@ -30,12 +30,15 @@ public class SudokuGenerator {
         }
       }
 
-    //Denne metoden brukes for å generere nye lovlige sudoku-grids ved hjelp av en backtracking-algoritme.
-    //Den går gjennom en 2D int-grid som i utgangspunktet kun består av 0-ere.
-    //Hver gang den kommer over en 0-verdi, setter den verdien lik et tilfeldig tall mellom 1 og 9, og går så videre til neste 0-verdi.
-    //Dersom den kommer til en 0-verdi der ingen tall mellom 1 og 9 fører til en gyldig tilstand, går den et skritt tilbake
-    //og endrer verdien på forrige verdi til et annet tall mellom 1 og 9 osv. Til slutt, når hele grid-en er fylt ut,
-    //vil vi ende med en gyldig sudoku-grid.
+    /**
+     * Denne metoden brukes for å generere nye lovlige sudoku-grids ved hjelp av en backtracking-algoritme.
+    Den går gjennom en 2D int-grid som i utgangspunktet kun består av 0-ere.
+    Hver gang den kommer over en 0-verdi, setter den verdien lik et tilfeldig tall mellom 1 og 9, og går så videre til neste 0-verdi.
+    Dersom den kommer til en 0-verdi der ingen tall mellom 1 og 9 fører til en gyldig tilstand, går den et skritt tilbake
+    og endrer verdien på forrige verdi til et annet tall mellom 1 og 9 osv. Til slutt, når hele grid-en er fylt ut,
+    vil vi ende med en gyldig sudoku-grid.
+     * @return
+     */
     private boolean generate() {
         List<Integer> numberList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Collections.shuffle(numberList);
@@ -59,8 +62,12 @@ public class SudokuGenerator {
         }
         return true;
     }
-    //Denne metoden kaller først på generate-metoden som genererer en ny gyldig grid. Deretter returnerer den en kopi av den genererte grid-en
-    //for å opprettholde riktig innkapsling.
+    
+    /**
+     * Denne metoden kaller først på generate-metoden som genererer en ny gyldig grid. Deretter returnerer den en kopi av den genererte grid-en
+    for å opprettholde riktig innkapsling.
+     * @return
+     */
     public int[][] getGrid() {
         this.generate();
         int[][] gridCopy = new int[9][9];
@@ -70,5 +77,11 @@ public class SudokuGenerator {
             }
         }
         return gridCopy;
+    }
+
+    public static void main(String[] args) {
+        SudokuGenerator generator = new SudokuGenerator();
+        int[][] gridArray = generator.getGrid();
+        SudokuGenerator.printBoard(gridArray);
     }
 }
