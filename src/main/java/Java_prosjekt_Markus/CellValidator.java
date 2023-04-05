@@ -13,7 +13,8 @@ public class CellValidator {
      * @return
      */
     public static Boolean isValidCell(int[][] grid, int value, int row, int column) {
-        return isValidRow(grid, value, row, column) && isValidColumn(grid, value, row, column) && isValidSmallGrid(grid, value, row, column);
+        boolean input = grid.length == 9 && value <= 9 && value >= 1 && row <=8 && value >= 0 && column <=8 && column >= 0;
+        return input && isValidRow(grid, value, row, column) && isValidColumn(grid, value, row, column) && isValidSmallGrid(grid, value, row, column);
     }
 
     /**

@@ -24,7 +24,7 @@ public class SudokuController {
     //Husk på innkapsling og validering!!!
 
     /**
-     * Dette er en hjelpermetode som lager en ny 2D-array med tekstfeltene i FXML-filen, som vil senere bli brukt av generateGrid
+     * Dette er en hjelpemetode som lager en ny 2D-array med tekstfeltene i FXML-filen, som vil senere bli brukt av generateGrid.
      */
     private void makeTextFieldArray() {
         int row = 0;
@@ -41,8 +41,6 @@ public class SudokuController {
         }
     }
 
-    //Denne metoden oppretter en ny instans av et SudokuGame, og får klassen til å opprette en ny grid. 
-    //Til slutt kalles generateGrid, som "oversetter" tallene i 2D int-array-et til tekst i de riktige tekstfeltene i UI-grid-en.
     /**
     * Denne metoden oppretter en ny instans av et SudokuGame, og får klassen til å opprette en ny grid. 
     Til slutt kalles generateGrid, som "oversetter" tallene i 2D int-array-et til tekst i de riktige tekstfeltene i UI-grid-en.
@@ -85,6 +83,8 @@ public class SudokuController {
         for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
             for (int column = 0; column < SudokuGame.COLUMN_SIZE; column++) {
                 TextField field = textFieldArray[row][column];
+                field.setEditable(false);
+                field.setFont(Font.font("Verdana", FontWeight.NORMAL, 16));
                 String gridNumber = "";
                 if (grid[row][column] != 0) {
                     gridNumber = String.valueOf(grid[row][column]);
@@ -96,7 +96,6 @@ public class SudokuController {
                 field.setText(gridNumber);
             }
         }
-        SudokuGenerator.printBoard(grid);
     }
 
     /**

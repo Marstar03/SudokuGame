@@ -14,7 +14,7 @@ public class SudokuFileManager {
     /**
      * Denne metoden tar inn en grid som den skal lagre til fil. Dette valgte jeg å gjøre ved å opprette en PrintWriter,
     og dermed også opprette tekstfilen "gridfile.txt", med mindre den allerede eksisterer.
-    Deretter itererer metoden gjennom grid-en rad for rad. Den konkatinerer så alle verdiene i hver rad sammen i én
+    Deretter itererer metoden gjennom grid-en rad for rad. Den konkatenerer så alle verdiene i hver rad sammen i én
     streng med komma mellom hver verdi. Deretter skrives denne strengen til filen, og blir en egen linje i filen.
      * @param grid
      * @throws IOException

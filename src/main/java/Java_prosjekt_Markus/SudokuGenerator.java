@@ -14,22 +14,6 @@ public class SudokuGenerator {
         {0, 0, 0, 0, 0, 0, 0, 0, 0} 
     };
 
-    //fjern denne metoden etter du er ferdig. Er kopiert fra John
-    public static void printBoard(int[][] board) {
-        for (int row = 0; row < SudokuGame.ROW_SIZE; row++) {
-          if (row % 3 == 0 && row != 0) {
-            System.out.println("-----------");
-          }
-          for (int column = 0; column < SudokuGame.COLUMN_SIZE; column++) {
-            if (column % 3 == 0 && column != 0) {
-              System.out.print("|");
-            }
-            System.out.print(board[row][column]);
-          }
-          System.out.println();
-        }
-      }
-
     /**
      * Denne metoden brukes for å generere nye lovlige sudoku-grids ved hjelp av en backtracking-algoritme.
     Den går gjennom en 2D int-grid som i utgangspunktet kun består av 0-ere.
@@ -77,11 +61,5 @@ public class SudokuGenerator {
             }
         }
         return gridCopy;
-    }
-
-    public static void main(String[] args) {
-        SudokuGenerator generator = new SudokuGenerator();
-        int[][] gridArray = generator.getGrid();
-        SudokuGenerator.printBoard(gridArray);
     }
 }

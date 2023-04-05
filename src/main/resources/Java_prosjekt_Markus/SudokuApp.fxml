@@ -21,7 +21,7 @@
       <Label layoutX="391.0" layoutY="325.0" prefHeight="18.0" prefWidth="89.0" text="Remaining lives:" />
       <TextField fx:id="livesField" alignment="CENTER" editable="false" layoutX="483.0" layoutY="317.0" prefHeight="33.0" prefWidth="35.0" text="3">
          <font>
-            <Font name="Felix Titling" size="16.0" />
+            <Font name="Verdana" size="16.0" />
          </font>
       </TextField>
       <GridPane fx:id="largeGrid" gridLinesVisible="true" layoutX="41.0" layoutY="87.0" prefHeight="91.0" prefWidth="102.0">

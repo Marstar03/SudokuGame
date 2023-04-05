@@ -96,4 +96,9 @@ public class SudokuGame implements SudokuGameInterface {
         }
         return true;
     }
+    public static void main(String[] args) {
+        SudokuGame game = new SudokuGame();
+        int[][] grid = game.getGameGrid();
+        System.out.println(grid.length);
+    }
 }
