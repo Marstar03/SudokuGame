@@ -20,11 +20,8 @@ public class SudokuController {
     @FXML private Button setButton, startNewGameButton, submitButton, saveGameButton, restoreGameButton;
     @FXML private GridPane largeGrid;
 
-    //Putt så mye av logikken til metodene inn i en annen klasse.
-    //Husk på innkapsling og validering!!!
-
     /**
-     * Dette er en hjelpemetode som lager en ny 2D-array med tekstfeltene i FXML-filen, som vil senere bli brukt av generateGrid.
+     * Dette er en hjelpemetode som lager en ny 2D-array med tekstfeltene i FXML-filen, som vil senere bli brukt av generateUIGrid.
      */
     private void makeTextFieldArray() {
         int row = 0;
@@ -43,7 +40,7 @@ public class SudokuController {
 
     /**
     * Denne metoden oppretter en ny instans av et SudokuGame, og får klassen til å opprette en ny grid. 
-    Til slutt kalles generateGrid, som "oversetter" tallene i 2D int-array-et til tekst i de riktige tekstfeltene i UI-grid-en.
+    Til slutt kalles generateUIGrid, som "oversetter" tallene i 2D int-array-et til tekst i de riktige tekstfeltene i UI-grid-en.
      */
     @FXML
     public void generateNewGrid() {
@@ -67,7 +64,7 @@ public class SudokuController {
     }
 
     /**
-     * Dette er en hjelpermetode som blir brukt av begge metodene over. Det denne metoden gjør, er å iterere gjennom 2D int-array-et gameGrid.
+     * Dette er en hjelpemetode som blir brukt av begge metodene over. Det denne metoden gjør, er å iterere gjennom 2D int-array-et gameGrid.
     For hver int-verdi i array-et, settes teksten til det tilsvarende tekstfeltet i UI-grid-en til en streng-representasjon av verdien.
     Dersom verdien er 0, er dette et felt der verdien har blitt fjernet og skal puttes inn av brukeren.
     Derfor settes teksten til dette feltet til å være en tom streng.
@@ -99,7 +96,7 @@ public class SudokuController {
     }
 
     /**
-     * Dette er en hjelpermetode som brukes av både submitGrid og saveGrid. Det denne metoden gjør, er å iterere gjennom alle
+     * Dette er en hjelpemetode som brukes av både submitGrid og saveGrid. Det denne metoden gjør, er å iterere gjennom alle
     tekstfeltene i UI-grid-en, oversette verdien fra streng til int, for så å sette denne verdien på rett plass i gameGrid-array-et.
     Må opprette en ny 2D-array, og sette det lik gameGrid til slutt for å sikre at gameGrid enten får inn alle verdiene eller ingen.
      */
@@ -121,7 +118,7 @@ public class SudokuController {
                     return;
                 }
                 if (SudokuGame.isNumeric(UIGridValue)) {
-                retrievedGrid[row][column] = Integer.parseInt(UIGridValue);
+                    retrievedGrid[row][column] = Integer.parseInt(UIGridValue);
                 }
             }
         }
