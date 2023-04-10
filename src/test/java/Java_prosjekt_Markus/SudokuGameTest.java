@@ -16,12 +16,6 @@ public class SudokuGameTest {
     }
 
     @Test
-    public void testConstructor() {
-        
-
-    }
-
-    @Test
     public void cellRemoverTest() {
         int i = 0;
         for (int j = 0; j < SudokuGame.ROW_SIZE; j++) {
@@ -38,6 +32,7 @@ public class SudokuGameTest {
     public void isNumericTest() {
         assertTrue(SudokuGame.isNumeric("42"));
         assertTrue(SudokuGame.isNumeric("0"));
+        assertFalse(SudokuGame.isNumeric(""));
         assertFalse(SudokuGame.isNumeric("grid"));
         assertFalse(SudokuGame.isNumeric("3H8"));
     }

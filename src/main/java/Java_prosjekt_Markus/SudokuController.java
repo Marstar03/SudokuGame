@@ -96,7 +96,7 @@ public class SudokuController {
     }
 
     /**
-     * Dette er en hjelpemetode som brukes av både submitGrid og saveGrid. Det denne metoden gjør, er å iterere gjennom alle
+     * Dette er en hjelpemetode som brukes av både submitGrid og saveGame. Det denne metoden gjør, er å iterere gjennom alle
     tekstfeltene i UI-grid-en, oversette verdien fra streng til int, for så å sette denne verdien på rett plass i gameGrid-array-et.
     Må opprette en ny 2D-array, og sette det lik gameGrid til slutt for å sikre at gameGrid enten får inn alle verdiene eller ingen.
      */

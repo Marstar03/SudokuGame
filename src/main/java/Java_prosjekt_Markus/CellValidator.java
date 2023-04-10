@@ -1,5 +1,7 @@
 package Java_prosjekt_Markus;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CellValidator {
 

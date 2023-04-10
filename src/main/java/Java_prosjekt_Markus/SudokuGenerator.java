@@ -1,5 +1,8 @@
 package Java_prosjekt_Markus;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class SudokuGenerator {
     private int[][] grid = {
@@ -34,10 +37,10 @@ public class SudokuGenerator {
                             grid[row][column] = value;
                             if (generate()) {
                                 return true;
-                              }
-                              else {
+                            }
+                            else {
                                 grid[row][column] = 0;
-                              }
+                            }
                         }
                     }
                     return false;

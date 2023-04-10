@@ -36,6 +36,6 @@ public class SudokuFileManagerTest {
 
     @AfterEach
     public void cleanUp() {
-        
+        //Slett filen gridFile.txt
     }
 }
