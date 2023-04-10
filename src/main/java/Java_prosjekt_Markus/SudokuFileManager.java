@@ -59,6 +59,7 @@ public class SudokuFileManager {
             savedGrid[rowCount] = intRow;
             rowCount++;
         }
+        scanner.close();
         return savedGrid;
     }
 }
