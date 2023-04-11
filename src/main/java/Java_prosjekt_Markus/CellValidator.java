@@ -29,7 +29,7 @@ public class CellValidator {
      * @return
      */
     private static Boolean isValidRow(int[][] grid, int value, int row, int column) {
-        for (int testColumn = 0; testColumn < 9; testColumn++) {
+        for (int testColumn = 0; testColumn < SudokuGame.COLUMN_SIZE; testColumn++) {
             if (grid[row][testColumn] == value && testColumn != column) {
                 return false;
             }
@@ -47,7 +47,7 @@ public class CellValidator {
      * @return
      */
     private static Boolean isValidColumn(int[][] grid, int value, int row, int column) {
-        for (int testRow = 0; testRow < 9; testRow++) {
+        for (int testRow = 0; testRow < SudokuGame.ROW_SIZE; testRow++) {
             if (grid[testRow][column] == value && testRow != row) {
                 return false;
             }
