@@ -27,6 +27,7 @@ public class SudokuGenerator {
      * @return
      */
     //Kilde: (Coding with John, 2021)
+    //Link: https://www.youtube.com/watch?v=mcXc8Mva2bA
     private boolean generate() {
         List<Integer> numberList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Collections.shuffle(numberList);
